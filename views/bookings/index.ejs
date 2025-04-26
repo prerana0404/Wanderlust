@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Bookings</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100">
+
+    <div class="max-w-4xl mx-auto py-8">
+        <h1 class="text-3xl font-bold text-center text-gray-800 mb-6">My Bookings</h1>
+
+        <% if (bookings.length === 0) { %>
+            <p class="text-center text-gray-600">No bookings found.</p>
+        <% } else { %>
+            <div class="bg-white shadow-md rounded-lg overflow-hidden">
+                <ul class="divide-y divide-gray-300">
+                    <% bookings.forEach(booking => { %>
+                        <li class="p-4 flex flex-col md:flex-row justify-between items-start md:items-center">
+                            <div>
+                                <h2 class="text-lg font-semibold text-gray-700"><%= booking.listing.title %></h2>
+                                <p class="text-gray-600"><strong>Check-in:</strong> <%= booking.checkInDate.toDateString() %></p>
+                                <p class="text-gray-600"><strong>Check-out:</strong> <%= booking.checkOutDate.toDateString() %></p>
+                                <p class="text-gray-600"><strong>Total Price:</strong> $<%= booking.totalPrice %></p>
+                                <p class="text-gray-700 font-medium">Status: 
+                                    <span class="
+                                        <% if (booking.status === 'pending') { %> text-yellow-500 <% } %>
+                                        <% if (booking.status === 'confirmed') { %> text-green-500 <% } %>
+                                        <% if (booking.status === 'cancelled') { %> text-red-500 <% } %>
+                                    ">
+                                        <%= booking.status %>
+                                    </span>
+                                </p>
+                            </div>
+
+                            <a href="/listings/<%= booking.listing._id %>" class="mt-4 md:mt-0 bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">
+                                View Listing
+                            </a>
+                        </li>
+                    <% }); %>
+                </ul>
+            </div>
+        <% } %>
+
+        <div class="mt-6 text-center">
+            <a href="/listings" class="text-blue-600 hover:underline">Back to Listings</a>
+        </div>
+    </div>
+
+</body>
+</html>
